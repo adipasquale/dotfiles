@@ -16,20 +16,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-compresspdf() {
-    for file in "$@"; do
-        if [[ -f "$file" && "$file" == *.pdf ]]; then
-            if [[ "$file" == *.compressed.pdf ]]; then
-                echo "Skipping $file: Already compressed"
-                continue
-            fi
-            output="${file%.pdf}.compressed.pdf"
-            gs -sDEVICE=pdfwrite -dNOPAUSE -dQUIET -dBATCH -dCompatibilityLevel=1.4 -sOutputFile="$output" "$file"
-        else
-            echo "Skipping $file: Not a PDF file"
-        fi
-    done
-}
 
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
@@ -41,10 +27,47 @@ alias ga='git add -p'
 alias gcm='git commit -m'
 alias gd='git diff'
 alias gst='git status'
-alias gco='git checkout'
+alias gc='git checkout'
 alias gbr='git branch --remote'
 alias gup='git pull --rebase'
 alias gp='git push'
 
-# cf https://www.atlassian.com/git/tutorials/dotfiles
-echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> $HOME/.bashrc
+. "/Users/adipasquale/.deno/env"
+
+
+git_dig () {
+    git log --pretty=format:'%Cred%h%Creset - %Cgreen(%ad)%Creset - %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short -G"$1" -- $2
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+alias config='/usr/bin/git --git-dir=/Users/adipasquale/.cfg/ --work-tree=/Users/adipasquale'
+
