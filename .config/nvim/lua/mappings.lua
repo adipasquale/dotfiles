@@ -11,9 +11,9 @@ map("n", "<leader>e", "<cmd> NvimTreeToggle <CR>")
 -- telescope
 map("n", "<leader><leader>", "<cmd> Telescope find_files <CR>")
 map("n", "<leader>ff", "<cmd> Telescope find_files <CR>")
-map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>")
+map("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 map("n", "<leader>fb", "<cmd> Telescope buffers<CR>")
-map("n", "<leader>gt", "<cmd> Telescope git_status <CR>")
+map("n", "<leader>fs", "<cmd> Telescope git_status <CR>")
 
 -- bufferline, cycle buffers
 map("n", "<Tab>", "<cmd> BufferLineCycleNext <CR>")
@@ -26,7 +26,7 @@ map("v", "<leader>/", "gc", { remap = true })
 
 -- format
 map("n", "<leader>fm", function()
-  require("conform").format()
+	require("conform").format()
 end)
 
 -- buffers
@@ -37,7 +37,7 @@ map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
-map("n", "<leader>bo", "<cmd>:%bd|e#<cr>", { desc = "Delete Buffer and Window" })
+map("n", "<leader>bo", "<cmd>:BufDelOthers<cr>", { desc = "Delete All Other Buffers" })
 
 -- cmd+C
 -- map("n", "<D-c>", '"+y', { desc = "copy with cmd+c" })
@@ -70,10 +70,10 @@ map("v", ">", ">gv")
 
 -- mini.files (from LazyVim)
 map("n", "<leader>fm", function()
-  require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+	require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
 end, { desc = "Open mini.files (Directory of Current File)" })
 map("n", "<leader>fM", function()
-  require("mini.files").open(vim.uv.cwd(), true)
+	require("mini.files").open(vim.uv.cwd(), true)
 end, { desc = "Open mini.files (cwd)" })
 
 -- permet de naviguer verticalement dans les longues lignes wrappées plutôt que de passer de ligne en ligne

@@ -43,35 +43,31 @@ capabilities.textDocument.completion.completionItem = {
   },
 }
 -- Setup language servers.
-local lspconfig = require "lspconfig"
+local lspconfig = require("lspconfig")
 
-lspconfig.lua_ls.setup {
+lspconfig.lua_ls.setup({
   capabilities = capabilities,
   settings = {
     Lua = {
       diagnostics = { globals = { "vim" } },
     },
   },
-}
+})
 
-lspconfig.rubocop.setup {
-  cmd = { "bundle", "exec", "rubocop", "--lsp" },
-  filetypes = { "ruby" },
-}
-lspconfig.ruby_lsp.setup {}
+lspconfig.ruby_lsp.setup({})
 
 -- setup multiple servers with same default options
 local servers = { "html" }
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  lspconfig[lsp].setup({
     capabilities = capabilities,
-  }
+  })
 end
 
 -- setup autoformat on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
-    vim.lsp.buf.format { async = false }
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   callback = function()
+--     vim.lsp.buf.format({ async = false })
+--   end,
+-- })

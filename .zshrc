@@ -24,13 +24,13 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/postgresql@15/lib/pkgconfig"
 
 
 alias ga='git add -p'
-alias gcm='git commit -m'
+alias gcommitm='git commit -m'
 alias gd='git diff'
-alias gst='git status'
+alias gs='git status'
 alias gc='git checkout'
-alias gbr='git branch --remote'
-alias gup='git pull --rebase'
-alias gp='git push'
+alias gpull='git pull --rebase'
+alias gpush='git push'
+alias gb="git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads |  head -n 8"
 
 . "/Users/adipasquale/.deno/env"
 
@@ -71,3 +71,4 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 alias config='/usr/bin/git --git-dir=/Users/adipasquale/.cfg/ --work-tree=/Users/adipasquale'
 
+export EDITOR=nvim
