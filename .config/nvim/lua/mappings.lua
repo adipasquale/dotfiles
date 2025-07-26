@@ -5,29 +5,9 @@ map("n", "<C-s>", "<cmd> w <CR>")
 map("i", "jk", "<ESC>")
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
 
--- nvimtree
-map("n", "<leader>e", "<cmd> NvimTreeToggle <CR>")
-
--- telescope
-map("n", "<leader><leader>", "<cmd> Telescope find_files <CR>")
-map("n", "<leader>ff", "<cmd> Telescope find_files <CR>")
-map("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
-map("n", "<leader>fb", "<cmd> Telescope buffers<CR>")
-map("n", "<leader>fs", "<cmd> Telescope git_status <CR>")
-
--- bufferline, cycle buffers
-map("n", "<Tab>", "<cmd> BufferLineCycleNext <CR>")
-map("n", "<S-Tab>", "<cmd> BufferLineCyclePrev <CR>")
-map("n", "<C-q>", "<cmd> bd <CR>")
-
 -- comment.nvim
 map("n", "<leader>/", "gcc", { remap = true })
 map("v", "<leader>/", "gc", { remap = true })
-
--- format
-map("n", "<leader>fm", function()
-	require("conform").format()
-end)
 
 -- buffers
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
@@ -38,9 +18,6 @@ map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 map("n", "<leader>bo", "<cmd>:BufDelOthers<cr>", { desc = "Delete All Other Buffers" })
-
--- cmd+C
--- map("n", "<D-c>", '"+y', { desc = "copy with cmd+c" })
 
 -- Move to window using the <ctrl> hjkl keys
 map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
@@ -68,16 +45,16 @@ map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- mini.files (from LazyVim)
-map("n", "<leader>fm", function()
-	require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
-end, { desc = "Open mini.files (Directory of Current File)" })
-map("n", "<leader>fM", function()
-	require("mini.files").open(vim.uv.cwd(), true)
-end, { desc = "Open mini.files (cwd)" })
-
 -- permet de naviguer verticalement dans les longues lignes wrappées plutôt que de passer de ligne en ligne
-map("n", "j", "gj")
-map("n", "k", "gk")
-map("v", "j", "gj")
-map("v", "k", "gk")
+-- map("n", "j", "gj")
+-- map("n", "k", "gk")
+-- map("v", "j", "gj")
+-- map("v", "k", "gk")
+
+-- always yank to system clipboard when using y
+map({ "x", "n" }, "y", '"+y', { silent = true })
+
+-- https://superuser.com/a/321726
+map("v", "<leader>d", "_d", { desc = "delete without yanking" })
+map("n", "<leader>d", "_d", { desc = "delete without yanking" })
+map("v", "<leader>p", "_dP", { desc = "replace currently selected text with default register without yanking it" })

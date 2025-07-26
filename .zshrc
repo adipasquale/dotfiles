@@ -72,3 +72,15 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 alias config='/usr/bin/git --git-dir=/Users/adipasquale/.cfg/ --work-tree=/Users/adipasquale'
 
 export EDITOR=nvim
+
+# bun completions
+[ -s "/Users/adipasquale/.bun/_bun" ] && source "/Users/adipasquale/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias ber='bundle exec rspec'
+
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq@16/bin:$PATH"
