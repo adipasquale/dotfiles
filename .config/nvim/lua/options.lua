@@ -51,3 +51,12 @@ vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#FF0000", bg = "#00FF00" })
 -- for indentmini
 vim.cmd.highlight("IndentLine guifg=#333333")
 vim.cmd.highlight("IndentLineCurrent guifg=#66FFFF")
+
+-- from https://influentcoder.com/posts/nvim-diagnostics/
+vim.diagnostic.config({
+  virtual_text = true, -- show inline messages
+  signs = true, -- show signs in the gutter
+  underline = true, -- underline problematic text
+  update_in_insert = false, -- don't update diagnostics while typing
+  severity_sort = true, -- sort diagnostics by severity
+})
