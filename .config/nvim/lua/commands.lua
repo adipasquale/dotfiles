@@ -50,3 +50,12 @@ vim.api.nvim_create_user_command("Cppath", function()
   vim.fn.setreg("+", path)
   vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
+
+-- open all changed files on current branch and highlights changes with gitsigns
+vim.api.nvim_create_user_command("OpenChangedFiles", function()
+  local base = vim.fn.systemlist("git merge-base production HEAD")[1]
+  for file in io.popen("git diff --name-only " .. base):lines() do
+    vim.cmd.edit(file)
+  end
+  vim.cmd("Gitsigns change_base " .. base)
+end, {})

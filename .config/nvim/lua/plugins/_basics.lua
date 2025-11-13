@@ -1,7 +1,7 @@
 return {
   {
     lazy = true,
-     "nvim-lua/plenary.nvim"
+    "nvim-lua/plenary.nvim",
   },
 
   -- persist sessions
@@ -17,6 +17,15 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = true })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 
   -- -- {
@@ -29,6 +38,4 @@ return {
   -- --     })
   -- --   end,
   -- -- },
-
-
 }

@@ -7,6 +7,8 @@ o.showmode = false
 
 o.clipboard = ""
 
+vim.opt.fixendofline = true
+
 -- Indenting
 o.expandtab = true
 o.shiftwidth = 2
@@ -60,3 +62,5 @@ vim.diagnostic.config({
   update_in_insert = false, -- don't update diagnostics while typing
   severity_sort = true, -- sort diagnostics by severity
 })
+
+vim.opt.swapfile = false

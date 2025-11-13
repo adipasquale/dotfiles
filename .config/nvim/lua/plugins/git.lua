@@ -72,18 +72,18 @@ return {
   },
 
   -- GitHub things
-  -- {
-  --   "pwntester/octo.nvim",
-  --   requires = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-telescope/telescope.nvim",
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  --   config = function()
-  --     require("octo").setup()
-  --   end,
-  -- },
-
+  {
+    "pwntester/octo.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("octo").setup()
+      vim.treesitter.language.register("markdown", "octo") -- utilise le bon markdown parsing
+    end,
+  },
 
   -- basic wrapper for fzf
   { "junegunn/fzf" },
@@ -96,4 +96,11 @@ return {
     end,
   },
 
+  -- lazygit. open with gG
+  {
+    "kdheepak/lazygit.nvim",
+    config = function()
+      vim.keymap.set("n", "gG", "<cmd>:LazyGit<CR>")
+    end,
+  },
 }
