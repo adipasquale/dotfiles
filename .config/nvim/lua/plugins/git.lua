@@ -96,11 +96,11 @@ return {
     end,
   },
 
-  -- lazygit. open with gG
+  -- lazygit. open with <leader>gg
   {
     "kdheepak/lazygit.nvim",
     config = function()
-      vim.keymap.set("n", "gG", "<cmd>:LazyGit<CR>")
+      vim.keymap.set("n", "<leader>gg", "<cmd>:LazyGit<CR>")
     end,
   },
 }

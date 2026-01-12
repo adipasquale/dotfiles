@@ -14,8 +14,8 @@ return {
     "mg979/vim-visual-multi",
     init = function()
       vim.g.VM_maps = {
-        ["Add Cursor Down"] = "<C-S-j>",
-        ["Add Cursor Up"] = "<C-S-k>",
+        ["Add Cursor Down"] = "<C-S-u>",
+        ["Add Cursor Up"] = "<C-A-i>",
       }
     end,
   },

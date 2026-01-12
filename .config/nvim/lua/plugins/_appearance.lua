@@ -3,8 +3,25 @@ return {
     "EdenEast/nightfox.nvim",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme "nightfox"
-    end
+      require("nightfox").setup({
+        groups = {
+          all = {
+            WinSeparator = { bg = "#3a3a3a", fg = "#cccccc" },
+          },
+          nightfox = {
+            IndentLine = { fg = "#3b4252" },
+            IndentLineCurrent = { fg = "#5e81ac" },
+            CursorLine = { bg = "#3b4252" },
+          },
+          dayfox = {
+            IndentLine = { fg = "#d8dee9" },
+            IndentLineCurrent = { fg = "#81a1c1" },
+            CursorLine = { bg = "#e6e6e6" },
+          },
+        },
+      })
+      vim.cmd.colorscheme("nightfox")
+    end,
   },
 
   { "nvim-tree/nvim-web-devicons" },
@@ -48,13 +65,12 @@ return {
     end,
   },
 
-
-  -- disabled because it slows down YAML
-  -- -- indent guides
-  -- -- {
-  -- --   "nvimdev/indentmini.nvim",
-  -- --   config = function()
-  -- --     require("indentmini").setup() -- use default config
-  -- --   end,
-  -- -- },
+  -- displays indentation rulers
+  {
+    "nvimdev/indentmini.nvim",
+    opts = {
+      current = true,
+      minlevel = 2,
+    },
+  },
 }

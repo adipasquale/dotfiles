@@ -5,9 +5,9 @@ map("n", "<C-s>", "<cmd> w <CR>")
 map("i", "jk", "<ESC>")
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
 
--- comment.nvim
-map("n", "<leader>/", "gcc", { remap = true })
-map("v", "<leader>/", "gc", { remap = true })
+-- comment lines
+map("n", "<leader>/", "gcc", { remap = true }) -- toggle comment current line
+map("v", "<leader>/", "gc", { remap = true }) -- toggle comment selected lines
 
 -- buffers
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })

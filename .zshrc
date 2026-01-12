@@ -1,4 +1,4 @@
-plugins=(rbenv poetry rails)
+plugins=(rbenv poetry rails forgit)
 ZSH_THEME="amuse"
 source ~/.oh-my-zsh/oh-my-zsh.sh
 
@@ -78,3 +78,4 @@ alias ber='bundle exec rspec'
 
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"

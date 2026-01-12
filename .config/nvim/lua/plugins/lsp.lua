@@ -12,7 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       -- we skip Mason for ruby lsp and Rubocop because it’s installed through bundler and rbenv
-      -- cf https://github.com/mason-org/mason.nvim/issues/1777
+      -- cf https://github.com/mason-org/mason.nvim/issues/1776
       vim.lsp.config("ruby_lsp", {
         init_options = {
           enabledFeatures = {

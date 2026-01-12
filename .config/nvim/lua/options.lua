@@ -40,8 +40,6 @@ o.cursorline = true
 local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
 vim.env.PATH = vim.env.PATH .. (is_windows and ";" or ":") .. vim.fn.stdpath("data") .. "/mason/bin"
 
-vim.api.nvim_set_hl(0, "IndentLine", { link = "Comment" })
-
 -- display relative line numbers in the left gutter
 vim.wo.relativenumber = true
 
@@ -49,10 +47,6 @@ vim.opt.listchars = { nbsp = "·" }
 vim.opt.list = true
 
 vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#FF0000", bg = "#00FF00" })
-
--- for indentmini
-vim.cmd.highlight("IndentLine guifg=#333333")
-vim.cmd.highlight("IndentLineCurrent guifg=#66FFFF")
 
 -- from https://influentcoder.com/posts/nvim-diagnostics/
 vim.diagnostic.config({
