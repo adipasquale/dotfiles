@@ -161,3 +161,16 @@ automatically-unhide-macos-hidden-apps = true
   if.app-id = 'org.keepassxc.keepassxc'
   run = ['layout floating']
 
+# Chromium est lancé par les specs
+[[on-window-detected]]
+  if.app-id = 'org.chromium.Chromium'
+  run = ['layout floating']
+
+[[on-window-detected]]
+  if.app-id = 'com.deezer.deezer-desktop'
+  run = ['layout floating']
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.iCal'
+  run = ['layout floating']
+
