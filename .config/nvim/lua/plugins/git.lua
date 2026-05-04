@@ -103,4 +103,13 @@ return {
       vim.keymap.set("n", "<leader>gg", "<cmd>:LazyGit<CR>")
     end,
   },
+
+  -- to open the current file on GitHub
+  {
+    "almo7aya/openingh.nvim",
+    config = function()
+      vim.keymap.set("n", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
+      vim.keymap.set("v", "<Leader>gf", ":OpenInGHFileLines <CR>", { silent = true, noremap = true })
+    end,
+  },
 }
