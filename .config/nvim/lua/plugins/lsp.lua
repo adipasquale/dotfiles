@@ -19,6 +19,11 @@ return {
             signatureHelp = true,
             -- formatting = false,
           },
+          addonSettings = {
+            ["Ruby LSP Rails"] = {
+              enablePendingMigrationsPrompt = false,
+            },
+          },
         },
       })
       vim.lsp.enable("ruby_lsp")

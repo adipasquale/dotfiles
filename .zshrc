@@ -85,3 +85,7 @@ if [ -d "${PHPENV_ROOT}" ]; then
   export PATH="${PHPENV_ROOT}/bin:${PATH}"
   eval "$(phpenv init -)"
 fi
+
+alias cdr="cd ~/dev/rdv-service-public"
+
+source <(COMPLETE=zsh jj)

@@ -65,12 +65,13 @@ return {
     end,
   },
 
+  -- disabled because slows down
   -- displays indentation rulers
-  {
-    "nvimdev/indentmini.nvim",
-    opts = {
-      current = true,
-      minlevel = 2,
-    },
-  },
+  -- {
+  --   "nvimdev/indentmini.nvim",
+  --   opts = {
+  --     current = true,
+  --     minlevel = 2,
+  --   },
+  -- },
 }
