@@ -1,0 +1,56 @@
+[user]
+	name = Adrien Di Pasquale
+	email = adrien@dipasquale.fr
+[core]
+	excludesFile = ~/.gitignore
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
+[credential]
+	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+    # external = difft
+
+[branch]
+	sort = -committerdate
+
+[fetch]
+	prune = true
+
+[log]
+	date = iso
+
+[rebase]
+    updateRefs = true
+    autosquash = true
+
+[alias]
+  fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+[http]
+	postBuffer = 157286400
+
+[delta]
+  # Make file headers stand out more
+  ; file-style = "bold blue"
+  ; file-decoration-style = "blue box"
+;   file-added-label = "+++ "
+;   file-modified-label = "~~~ "
+;   file-removed-label = "--- "
+;   # Make hunk headers more subtle
+;   hunk-header-style = "line-number syntax bold italic 237"
+;   hunk-header-decoration-style = none
+
+[credential "https://codeberg.org"]
+	provider = generic
