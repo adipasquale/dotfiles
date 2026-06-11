@@ -1,0 +1,15 @@
+git:
+  pagers:
+    - pager: delta --paging=never
+  mainBranches:
+    - master
+    - main
+    - production
+  commit:
+    autoWrapCommitMessage: false
+os:
+  editPreset: nvim-remote
+keybinding:
+  commits:
+    moveUpCommit: '<ctrl-shift-up>'
+    moveDownCommit: '<ctrl-shift-down>'
