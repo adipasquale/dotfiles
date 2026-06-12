@@ -1,0 +1,8 @@
+.DS_Store
+.~lock*
+.irbrc
+.irb_history
+.idea
+.rgignore
+.claude
+CLAUDE.md
