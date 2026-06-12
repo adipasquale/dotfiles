@@ -1,8 +1,8 @@
-plugins=(rbenv poetry rails forgit)
+plugins=(poetry rails forgit)
 ZSH_THEME="amuse"
 source ~/.oh-my-zsh/oh-my-zsh.sh
 
-eval "$(rbenv init - zsh)"
+# eval "$(rbenv init - zsh)"
 
 alias termconfig="code ~/.zshrc"
 alias termreload="source ~/.zshrc"
@@ -12,9 +12,9 @@ function co() {
 }
 
 # PYENV
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 
 alias ga='git add -p'
@@ -26,7 +26,7 @@ alias gpull='git pull --rebase'
 alias gpush='git push'
 alias gb="git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads |  head -n 8"
 
-. "/Users/adipasquale/.deno/env"
+# . "/Users/adipasquale/.deno/env"
 
 
 git_dig () {
@@ -37,38 +37,33 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-autoload -U add-zsh-hook
+# autoload -U add-zsh-hook
 
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+# load-nvmrc() {
+#   local nvmrc_path
+#   nvmrc_path="$(nvm_find_nvmrc)"
+#
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version
+#     nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+#
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+#       nvm use
+#     fi
+#   elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
+#
+# add-zsh-hook chpwd load-nvmrc
+# load-nvmrc
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
-alias config='/usr/bin/git --git-dir=/Users/adipasquale/.cfg/ --work-tree=/Users/adipasquale'
-
 export EDITOR=nvim
-
-# bun completions
-[ -s "/Users/adipasquale/.bun/_bun" ] && source "/Users/adipasquale/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -88,4 +83,11 @@ fi
 
 alias cdr="cd ~/dev/rdv-service-public"
 
-source <(COMPLETE=zsh jj)
+# source <(COMPLETE=zsh jj)
+
+# cf https://www.wrenhold.com/posts/2023/setup-dotfiles-git/#downloading-your-repository-onto-a-new-machine
+export DOTFILES_PATH=~/.dotfilesgit
+alias dotfilesgit='/usr/bin/git --git-dir=$DOTFILES_PATH/ --work-tree=$HOME'
+
+# Mise is a version manager for node, ruby, go, python... replaces rbenv pyenv etc
+eval "$(mise activate zsh)"
