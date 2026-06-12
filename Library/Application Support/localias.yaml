@@ -1,0 +1,18 @@
+# localias config file syntax
+#
+# 	alias: port
+#
+# for example,
+#
+#   bareTLD: 9003 # serves over https and http
+#   implicitly_secure.test: 9002 # serves over https and http
+#   https://explicit_secure.test: 9000 # serves over https and http
+#   http://explicit_insecure.test: 9001 # serves over http only
+#
+www.rdv-solidarites.localhost: 3001
+www.rdv-mairie.localhost: 3000
+stop-croisieres.localhost: 10004
+guide-etudiant-etranger.localhost: 8013
+www.rdv-numerique.localhost: 3000
+rdv-etat.localhost: 3000
+www.rdv-etat.localhost: 3000
