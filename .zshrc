@@ -1,4 +1,4 @@
-plugins=(poetry rails forgit)
+plugins=(poetry rails)
 ZSH_THEME="amuse"
 source ~/.oh-my-zsh/oh-my-zsh.sh
 
@@ -91,3 +91,5 @@ alias dotfilesgit='/usr/bin/git --git-dir=$DOTFILES_PATH/ --work-tree=$HOME'
 
 # Mise is a version manager for node, ruby, go, python... replaces rbenv pyenv etc
 eval "$(mise activate zsh)"
+
+export POSTGRES_USER=adipasquale
