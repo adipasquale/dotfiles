@@ -101,6 +101,28 @@ return {
     "kdheepak/lazygit.nvim",
     config = function()
       vim.keymap.set("n", "<leader>gg", "<cmd>:LazyGit<CR>")
+
+      local prev_tab_count = 0
+
+      -- Record tab count when lazygit opens so we can detect if 'e' opened a new tab
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        callback = function(args)
+          if vim.fn.getbufvar(args.buf, "&filetype") == "lazygit" then
+            prev_tab_count = vim.fn.tabpagenr("$")
+          end
+        end,
+      })
+
+      -- The plugin calls this at the very end of on_exit, after restoring prev_win.
+      -- We defer one tick so any pending RPCs (like --remote-tab) are processed first.
+      vim.g.lazygit_on_exit_callback = function()
+        local before = prev_tab_count
+        vim.schedule(function()
+          if vim.fn.tabpagenr("$") > before then
+            vim.cmd("tablast")
+          end
+        end)
+      end
     end,
   },
 

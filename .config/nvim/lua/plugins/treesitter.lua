@@ -15,28 +15,25 @@ return {
     -- end,
   },
 
-  -- new text objects like if for inside function
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
-  --   dependencies = "nvim-treesitter/nvim-treesitter",
-  --   config = function()
-  --     require("nvim-treesitter.configs").setup({
-  --
-  --       textobjects = {
-  --         select = {
-  --           enable = true,
-  --           keymaps = {
-  --             ["af"] = "@function.outer",
-  --             ["if"] = "@function.inner",
-  --             ["ac"] = "@class.outer",
-  --             ["ic"] = "@class.inner",
-  --             ["al"] = "@loop.outer",
-  --             ["il"] = "@loop.inner",
-  --           },
-  --           include_surrounding_whitespace = true,
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
+  -- new text objects like af for around function, if for inside function
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      local select = require("nvim-treesitter-textobjects.select")
+      local keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["al"] = "@loop.outer",
+        ["il"] = "@loop.inner",
+      }
+      for key, query in pairs(keymaps) do
+        vim.keymap.set({ "x", "o" }, key, function()
+          select.select_textobject(query, "textobjects")
+        end)
+      end
+    end,
+  },
 }

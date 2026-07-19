@@ -19,7 +19,10 @@ o.softtabstop = 2
 -- Folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldenable = false
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.sessionoptions:remove("folds")
 
 -- vim.opt.fillchars = { eob = " " }
 o.ignorecase = true
