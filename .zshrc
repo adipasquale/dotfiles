@@ -2,6 +2,15 @@ plugins=(poetry rails)
 ZSH_THEME="amuse"
 source ~/.oh-my-zsh/oh-my-zsh.sh
 
+# show active gh user (yellow) after the git branch in the amuse theme prompt
+gh_user_prompt_info() {
+  local user=$(gh config get -h github.com user 2>/dev/null)
+  [[ -n "$user" ]] && echo " %{$fg[yellow]%}gh:$user%{$reset_color%}"
+}
+PROMPT='
+%{$fg_bold[green]%}%~%{$reset_color%}$(git_prompt_info)$(gh_user_prompt_info)$(virtualenv_prompt_info) ⌚ %{$fg_bold[red]%}%*%{$reset_color%}
+$ '
+
 alias ga='git add -p'
 alias gs='git status'
 alias gc='git checkout'
