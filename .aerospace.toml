@@ -100,22 +100,28 @@ automatically-unhide-macos-hidden-apps = true
     ctrl-comma = 'layout accordion horizontal vertical'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    ctrl-h = 'focus --ignore-floating left'
-    ctrl-j = 'focus --ignore-floating down'
-    ctrl-k = 'focus --ignore-floating up'
-    ctrl-l = 'focus --ignore-floating right'
+    # Bound to cmd-ctrl (not plain ctrl) so it's driven exclusively by
+    # caps-lock (held = cmd+ctrl via Karabiner) and doesn't collide with
+    # plain ctrl+hjkl used for herdr/Neovim pane navigation.
+    cmd-ctrl-h = 'focus --ignore-floating left'
+    cmd-ctrl-j = 'focus --ignore-floating down'
+    cmd-ctrl-k = 'focus --ignore-floating up'
+    cmd-ctrl-l = 'focus --ignore-floating right'
+
+    ctrl-alt-left = 'focus --ignore-floating left'
+    ctrl-alt-right = 'focus --ignore-floating right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
-    ctrl-shift-h = 'move left'
-    ctrl-shift-j = 'move down'
-    ctrl-shift-k = 'move up'
-    ctrl-shift-l = 'move right'
+    cmd-ctrl-shift-h = 'move left'
+    cmd-ctrl-shift-j = 'move down'
+    cmd-ctrl-shift-k = 'move up'
+    cmd-ctrl-shift-l = 'move right'
     ctrl-shift-f = 'layout floating tiling'
 
-    alt-ctrl-h = ['join-with left', 'mode main']
-    alt-ctrl-j = ['join-with down', 'mode main']
-    alt-ctrl-k = ['join-with up', 'mode main']
-    alt-ctrl-l = ['join-with right', 'mode main']
+    cmd-ctrl-alt-h = ['join-with left', 'mode main']
+    cmd-ctrl-alt-j = ['join-with down', 'mode main']
+    cmd-ctrl-alt-k = ['join-with up', 'mode main']
+    cmd-ctrl-alt-l = ['join-with right', 'mode main']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     ctrl-alt-a = 'exec-and-forget ~/.aerospace-auto-layout.sh'
