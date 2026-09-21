@@ -50,3 +50,6 @@ export POSTGRES_USER=adipasquale
 export EUROUTER_API_KEY=$(security find-generic-password -a "$USER" -s "kilo-eurouter-api-key" -w 2>/dev/null)
 
 source ~/.zsh/completion/scalingo_complete.zsh
+
+# for devbox
+export PATH="$HOME/.local/bin:$PATH"
