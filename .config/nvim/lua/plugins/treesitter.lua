@@ -28,6 +28,8 @@ return {
         ["ic"] = "@class.inner",
         ["al"] = "@loop.outer",
         ["il"] = "@loop.inner",
+        ["ad"] = "@block.outer",
+        ["id"] = "@block.inner",
       }
       for key, query in pairs(keymaps) do
         vim.keymap.set({ "x", "o" }, key, function()
