@@ -1,0 +1,10 @@
+# Loaded by lazygit.nvim when vim.o.background is "dark" (see lua/plugins/git.lua)
+gui:
+  theme:
+    selectedLineBgColor: ["#2b3b51"] # nightfox sel0
+    inactiveViewSelectedLineBgColor: ["#212e3f"] # nightfox bg2
+git:
+  diffRenderers:
+    - colorArg: always
+      command: >-
+        delta --dark --paging=never --line-numbers --syntax-theme=OneHalfDark --minus-style='syntax "#3b1f26"' --minus-emph-style='syntax "#6e2b35"' --plus-style='syntax "#1d3b2a"' --plus-emph-style='syntax "#2b6a40"'

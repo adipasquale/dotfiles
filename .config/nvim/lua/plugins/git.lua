@@ -100,7 +100,19 @@ return {
   {
     "kdheepak/lazygit.nvim",
     config = function()
-      vim.keymap.set("n", "<leader>gg", "<cmd>:LazyGit<CR>")
+      -- Pick a dark or light lazygit theme (delta pager + selection colors) matching nvim,
+      -- layered on top of the user's own lazygit config if there is one.
+      local user_config = vim.fn.trim(vim.fn.system("lazygit -cd")) .. "/config.yml"
+      vim.keymap.set("n", "<leader>gg", function()
+        local config_files = {}
+        if vim.fn.filereadable(user_config) == 1 then
+          table.insert(config_files, user_config)
+        end
+        table.insert(config_files, vim.fn.stdpath("config") .. "/lazygit/" .. vim.o.background .. ".yml")
+        vim.g.lazygit_use_custom_config_file_path = 1
+        vim.g.lazygit_config_file_path = config_files
+        vim.cmd("LazyGit")
+      end)
 
       local prev_tab_count = 0
 

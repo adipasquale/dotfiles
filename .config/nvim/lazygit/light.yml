@@ -1,0 +1,13 @@
+# Loaded by lazygit.nvim when vim.o.background is "light" (see lua/plugins/git.lua)
+gui:
+  theme:
+    selectedLineBgColor: ["#d5dbe5"] # dayfox sel0
+    inactiveViewSelectedLineBgColor: ["#e4dcd4"] # dayfox bg2
+git:
+  pagers:
+    - colorArg: always
+      pager: >-
+        delta --light --paging=never --line-numbers
+        --syntax-theme=GitHub
+        --minus-style='syntax "#ffebe9"' --minus-emph-style='syntax "#ffc1c0"'
+        --plus-style='syntax "#dafbe1"' --plus-emph-style='syntax "#aceebb"'
