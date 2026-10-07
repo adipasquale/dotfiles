@@ -31,11 +31,25 @@ return {
     opts = {
       set_dark_mode = function()
         vim.cmd("colorscheme nightfox")
-        -- vim.api.nvim_set_option_value("background", "dark", {})
+        require("bufferline").setup({
+          options = { themable = false },
+          highlights = {
+            background = { fg = "#cdd6f4", bg = "#1e1e2e" },
+            buffer_selected = { fg = "#cdd6f4", bg = "#313244", bold = true },
+            buffer_visible = { fg = "#cdd6f4", bg = "#1e1e2e" },
+          }
+        })
       end,
       set_light_mode = function()
         vim.cmd("colorscheme dayfox")
-        -- vim.api.nvim_set_option_value("background", "light", {})
+        require("bufferline").setup({
+          options = { themable = false },
+          highlights = {
+            background = { fg = "#3c3836", bg = "#fbf1c7" },
+            buffer_selected = { fg = "#3c3836", bg = "#ebdbb2", bold = true },
+            buffer_visible = { fg = "#88c0d0", bg = "#fbf1c7" },
+          }
+        })
       end,
       update_interval = 3000,
       fallback = "dark",
@@ -48,7 +62,6 @@ return {
     event = "BufReadPre",
     opts = {
       options = {
-        themable = true,
         offsets = {
           { filetype = "NvimTree", highlight = "NvimTreeNormal" },
         },
