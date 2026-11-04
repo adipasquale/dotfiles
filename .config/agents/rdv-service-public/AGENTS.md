@@ -28,11 +28,11 @@ h1.card-title
 
 plutôt que `h1.card-title Changer d’adresse email`. Une phrase par ligne.
 
-Attention : deux lignes `|` consécutives dans le même paragraphe ne sont **pas** séparées par un espace au rendu (`|` ne rajoute aucun espace). Utilise `'` (au lieu de `|`) sur toutes les lignes sauf la dernière du paragraphe pour obtenir l'espace attendu entre les phrases :
+Attention : deux lignes `|` consécutives dans le même paragraphe ne sont **pas** séparées par un espace au rendu (`|` ne rajoute aucun espace). Utilise `|>` sur toutes les lignes sauf la dernière du paragraphe pour obtenir l'espace attendu entre les phrases :
 
 ```slim
 p
-  ' Renseignez votre nouvelle adresse email.
+  |> Renseignez votre nouvelle adresse email.
   | Un code de confirmation à 6 chiffres vous sera envoyé à cette adresse.
 ```
 
@@ -46,16 +46,14 @@ Si une vue existante contient encore des classes Bootstrap, ne les reproduis pas
 
 - **RSpec :** `bundle exec rspec <chemins>` — ou `bin/rspec` (via Spring). Cible des fichiers/dossiers précis : `bundle exec rspec spec/features/users/online_booking/`.
 - Les specs de feature utilisent Capybara avec le driver Playwright pour les exemples `js: true` ; les factories viennent de `factory_bot`.
+- Pour tester ce qu'une page affiche ou non (présence/absence d'un bloc, d'un lien), écris plutôt une feature spec sans JS (driver rack_test par défaut) qu'une request spec.
 - Pour les flux online-booking/ANTS nécessitant l'API ANTS externe, stubbe-la avec `stub_ants_status_ok(...)` (voir les specs existantes).
 - WebMock ne voit pas les requêtes faites par le navigateur (`fetch` JS).
-  Dans une spec `js: true`, intercepte-les avec Playwright (exemple : `spec/features/agents/address_autocomplete_spec.rb`) :
-  ```ruby
-  page.driver.with_playwright_page do |playwright_page|
-    playwright_page.route("https://data.geopf.fr/geocodage/search/**", lambda { |route, _request|
-      route.fulfill(status: 200, contentType: "application/json", body: file_fixture("geocode_result.json").read)
-    })
-  end
-  ```
+  Dans une spec `js: true`, intercepte-les avec Playwright.
+  Pour l'autocomplétion d'adresse (API Base Adresse Nationale), utilise le helper
+  `stub_base_adresse_nationale_autocomplete_request` (voir `spec/support/base_adresse_nationale_stubs.rb`,
+  options `results:` (`"16_quai_de_la_loire"` par défaut, ou `[]`), `sleep:` et `abort:` ; le comptage
+  de requêtes reste inline, exemple dans `spec/features/agents/address_autocomplete_spec.rb`).
   N'ajoute pas de header `Access-Control-Allow-Origin` : Playwright l'ajoute déjà, et le doublon fait échouer le `fetch`.
 - Playwright (`yarn run playwright install chromium`) est requis même pour les specs non-JS : un hook `before(:suite)` de `spec/support/capybara_config.rb` refuse de démarrer sinon.
 - Les specs `js: true` servent `app/assets/builds` : relance `yarn build` après toute modification JS.
@@ -70,6 +68,17 @@ Si une vue existante contient encore des classes Bootstrap, ne les reproduis pas
 - ne surcharge jamais un let défini un niveau plus haut. dans ce cas, déplace le let vers tous les contextes.
 
 Lance toujours les linters et specs pertinents après un changement non trivial avant de considérer la tâche terminée.
+
+## Seeds
+
+- Les seeds ne sont pas transactionnels : un échec laisse la base partiellement remplie, réinitialise-la entre deux essais.
+- Teste sur une base jetable : `RAILS_ENV=test DATABASE_URL="postgres:///lapin_seed_check?host=/tmp" DB_SEEDS_USERS_AND_AGENTS_PASSWORD="Motdepasse1234!" bundle exec rails runner 'load Rails.root.join("db/seeds/medico_social.rb")'` (le mot de passe doit contenir une majuscule).
+- Faker est dans le groupe `:test` du Gemfile : indisponible au runtime des seeds.
+  Les noms réalistes sont figés dans la liste `noms_usagers` (`db/seeds/medico_social.rb`), à compléter à la main (diversité des origines, noms composés avec tirets ou espaces).
+- Emails de démo : `<initiale><nom>@<acronyme_du_service>.rdv.fr` — le domaine `.rdv.fr` n'existe pas, aucun envoi accidentel possible depuis une base de démo.
+  Utilise `.parameterize.tr("-", "")` et vérifie l'unicité des adresses générées.
+- Reste déterministe : `Random.new(42)` et `sample(random:)`, jamais de `sample` nu ; les RDVs sont posés sur des jours ouvrés.
+- Ne renomme pas les variables existantes (ex. `user_org_paris_nord_patricia`) ; si un nom manque de réalisme, change seulement le nom de famille.
 
 ## Sécurité
 
@@ -106,12 +115,32 @@ En phase de plan, tu peux me le suggérer si la PR contient plusieurs ajouts dis
 Avant de découper, relis le diff et retire ce qui n'est pas nécessaire : code mort, redondances, CSS cosmétique, événements que personne n'écoute.
 Replie les correctifs dans le commit concerné avec `git commit --fixup` puis `GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash origin/production`.
 
+## Relecture locale avec diffle
+
+La relecture se fait avec [diffle](https://github.com/moritzwilksch/diffle), les commentaires vivent dans `.git/diffle/comments.json` (threads par commit, réponses dans `messages[]`).
+
+- Pour revoir une branche : `diffle origin/production` (branche courante vs son point de bifurcation sur production).
+- Si je te demande de surveiller et traiter les commentaires : relis le fichier juste avant d'écrire, ajoute un message `{id, body, createdAt, updatedAt}` dans `messages[]` du thread, ne touche ni aux messages existants ni à `resolved`.
+- diffle tourne pendant que tu écris : une écriture externe peut être écrasée par sa sauvegarde suivante (et inversement). Relis et remerge plutôt que d'écraser, et signale-moi si une réponse disparaît.
+- Un rebase change les shas : les threads ancrés sur les anciens shas deviennent stale, préviens-le.
+- Le watcher échoue (UNKNOWN) sur les fichiers non réguliers non git-ignorés, ex sockets : git-ignore-les (`.overmind.sock` l'est).
+
 ## Code style
 
 - utilise la syntaxe ruby method(some_kwarg:) où tu ne répètes pas some_kwarg si c'est le même nom de variable
-- n'ajoute des commentaires que si c'est vraiment pertinent et difficile à comprendre sans
+- n'ajoute des commentaires que si c'est vraiment pertinent et difficile à comprendre sans : le code simple et lisible n'a pas besoin d'être expliqué
+- ne crée pas de méthode partagée (dans un modèle ou ailleurs) pour mutualiser de la logique temporaire, ex. entre un script et une migration : dupliquer le code est plus lisible et plus simple à supprimer. Ne sois pas DRY à tout prix
+
+## Markdown
+
+Reviens à la ligne à chaque phrase. Ça aide à la relecture en cas de diff.
 
 ### Environnement de travail
+
+## Plans
+
+Stocke les plans au format markdown dans ./plans (listé dans .git/info/exclude)
+Ne supprime jamais un plan que tu n'as pas écrit dans la session courante
 
 ## VM devbox Lima
 
@@ -146,3 +175,21 @@ corepack yarn run playwright install chromium --with-deps
 ```
 
 Dans un conteneur Debian nu sans Postgres ni Redis via `mise`, installe-les avec `sudo apt-get install -y postgresql redis-server locales`, démarre-les avec `sudo service postgresql start` et `sudo service redis-server start` (pas de systemd), puis crée ton rôle avec `sudo -u postgres createuser --superuser $(whoami)`.
+
+### Captures d’écran en local
+
+Avant toute capture d’écran destinée au dépôt (page vitrine, documentation, README), masque les trois éléments propres à l’environnement local : le bandeau rouge du nom d’instance, le compteur de temps de chargement de rack-mini-profiler, et la bannière bleue « Besoin d’aide pour bien démarrer ».
+
+Avec Playwright, injecte ce script d’initialisation dans le contexte du navigateur (il survit aux navigations) :
+
+```js
+await context.addInitScript(() => {
+  const style = document.createElement("style");
+  style.textContent = ".rdv-solidarites-instance-name-wrapper, .profiler-results, .fr-notice--info { display: none !important; }";
+  document.addEventListener("DOMContentLoaded", () => document.head.appendChild(style));
+});
+```
+
+Les captures de la page fonctionnalités sont en 16:9 (viewport 1440×810, `deviceScaleFactor: 2`), converties en webp avec `cwebp -q 85`.
+
+La génération des captures de la page fonctionnalités est automatisée par `scripts/devtools/capture_page_fonctionnalites.cjs` (à lancer avec `node`), qui crée d'abord les données de démo manquantes via `scripts/devtools/setup_capture_fonctionnalites.rb` (RDV collectif, invitation) et incruste les captures mobiles sur un fond neutre 16:9 pour éviter tout étirement.
